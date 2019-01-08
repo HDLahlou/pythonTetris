@@ -1,0 +1,97 @@
+We are using three widgets: Tk is the class which we use to create the root window – the main window of our application. Our application should only have one root, but it is possible for us to create other windows which are separate from the main window.
+
+Button and Label should be self-explanatory. Each of them has a parent widget, which we pass in as the first parameter to the constructor – we have put the label and both buttons inside the main window, so they are the main window’s children in the tree. We use the pack method on each widget to position it inside its parent – we will learn about different kinds of layout later.
+
+Becomes child through self.button and self.label
+
+
+The label is a static element – it doesn’t do anything by default; it just displays something. Buttons, however, are designed to cause something to happen when they are clicked.
+
+
+command keyword parameter when constructing each button to specify the function which should handle each button’s click events – both of these functions are object methods.
+
+In this example, our class doesn’t inherit from any tkinter objects 
+
+we use composition to associate our tree of widgets with our class. We could also use inheritance to extend one of the widgets in the tree with our custom functions.
+
+WIDGET CLASSES
+tkinter widget classes
+
+Frame = container widget placed inside a window, can have own border and background, used to group related widgets together in an app layout
+
+Toplevel = container widget which is displayed as a seperate window
+
+Canvas= widget for drawing graphics, can be used to create custom widgets, can draw anything inside and make interactive
+
+Text= displays formated text, can be editable or have embedded images
+
+Button = usually maps directly onto a user action
+
+Label = simple widget which displays short piece of text or an image, usually not interactive
+
+Message = similar to label, but longer bodies of text which need to be wrapped
+
+Scrollbar = allows user to scroll through content too large to be visable all at once
+
+Checkbutton, radiobutton, listbox, entry, and scale = input widgets
+
+Menu, Menubutton = used to create pull-down menus
+
+
+
+LAYOUT OPTIONS
+
+Simple layout, arranged three widgets ina  sigle column inside the window using the pack method
+
+Pack is one of three different geometry managers available in tk. Have to use one or the widget will not show up in the window
+
+By default, pack arranges widgets vertically inside their parent container, from the top down, can change alignment to bottom, left or right by using optional side parameter. Can mix different alignments in the same container
+
+from tkinter import LEFT, RIGHT
+
+# (...)
+
+self.label.pack()
+self.greet_button.pack(side=LEFT)
+self.close_button.pack(side=RIGHT)
+
+complicated layouts with pack by grouping widgets together in frames and aligning the groups to out liking, using the grid method instead, postiion widgets ina  more flexible way, using a grid layout. geometry manager recommended for complex interfaces
+
+from tkinter import W
+
+# (...)
+
+self.label.grid(columnspan=2, sticky=W)
+self.greet_button.grid(row=1)
+self.close_button.grid(row=1, column=1)
+
+Default row is the first available empty row and default column is 0
+
+If the widget is smaller than its cell, can customize how its aligned using the sticky parameter (possible values N S E W), can combine through addition. By default, widget is centered bother vertically and horizontally. 
+Ex: sticky = w widget will be left aligned horizontally and sticky=w+e will cause it to be stretched to fill the whole cell horizontally, cna specify corners with NE, SW, etc
+
+To have a widget span multiple columns or rows the columnspan and rowspan
+
+Do not use pack and grid in the same window, uncompatable calculations for widget positions
+
+Third geometry manager is place, allows to provide explicit sizes and positions for widgets, seldom a good idea to use for ordinary guis, too inflexible and time consuming to specify absolute postions
+
+
+CUSTOM EVENTS
+
+Can make widgets listen for other events and bind handlers to them, using the bind method which can be found on every widget class
+
+Events are uniquely identified by a sequence name in string format. Examples:
+
+"<Button-1>" "<Button-2>" "<Button-3>" events which signal that a particular mouse button has been pressed while the mouse cursor is positioned over the widget in question. Button 1 is left mouse But3 is right and But2 is middle
+
+"<ButtonRelease-1>" indicates that the left button has been released
+
+"<B1-Motion>" indicates that the mouse was moved while the left button was pressed
+
+"<Enter>" "<Leave>" tells us when the mouse had entered or left the widget
+
+"<Key>" means that any key on the keyboard was pressed, can listen for specific key presses for example <Return> the enter key, or combination like <Shift-Up>. Letters like a is just "a".
+
+"<Configure>" means that the widget has changed size
+
